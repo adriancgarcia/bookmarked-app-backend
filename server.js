@@ -13,7 +13,7 @@ const cors = require("cors")
 const morgan = require("morgan")
 
 ////////////////////////////
-//DATABSE CONNECTION ///////
+//DATABASE CONNECTION ///////
 ///////////////////////////
 mongoose.connect(DATABASE_URL, {
 
@@ -21,7 +21,7 @@ mongoose.connect(DATABASE_URL, {
 
 //CONNECTION EVENTS
 mongoose.connection
-.on("oppen", () => console.timeLog("you are connected to Mongoose"))
+.on("open", () => console.timeLog("you are connected to Mongoose"))
 .on("close", () => console.log("You are disconnected from mongoose"))
 .on("error", (error) => console.log(error));
 
@@ -43,6 +43,20 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // ROUTES
+
+// Destroy - Delete - /bookmarks/:id - delete a single bookmark
+app.delete("/bookmarks/:id", async (req, res) => {
+    try {
+        // delete the bookmark
+        const bookmark = await Bookmarks.findByIdAndDelete(req.params.id)
+        // send the deleted bookmark as json
+        res.status(204).json(bookmark)
+    } catch (error) {
+        res.status(400).json({error})
+    }
+})
+
+
 app.get ("/", (req, res) => {
     res.send("hello, world");
 });
