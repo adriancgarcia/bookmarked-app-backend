@@ -50,33 +50,9 @@ app.get("/bookmarks", async(req,res) => {
         const bookmark = await Bookmarks.find({})
         res.json(bookmark)
     }catch (error){
-        res.status
-    }
-});
-
-//Create//
-app.post("/bookmarks", async (req,res) => {
-    try{
-        const bookmark = await Bookmarks.create(req.body)
-        res.json(bookmark)
-    }catch (error){
         res.status(400).json({error})
     }
 });
-
-// UPDATE - PUT 
-app.put("/bookmarks/:id", async (req, res) => {
-    try {
-        const bookmark = await
-        Bookmarks.findByIdAndUpdate(req.params.id, req.body,
-            {
-                new: true
-            });
-            res.json (bookmark);
-    } catch (error) {
-        res.status(400).json({error});
-    }
-})
 
 // Destroy - Delete - /bookmarks/:id - delete a single bookmark
 app.delete("/bookmarks/:id", async (req, res) => {
@@ -90,6 +66,41 @@ app.delete("/bookmarks/:id", async (req, res) => {
     }
 })
 
+// UPDATE - PUT 
+app.put("/bookmarks/:id", async (req, res) => {
+    try {
+        const bookmark = await
+        Bookmarks.findByIdAndUpdate(req.params.id, req.body,
+            {
+                new: true
+            });
+            res.json(bookmark);
+    } catch (error) {
+        res.status(400).json({error});
+    }
+})
+
+//Create//
+app.post("/bookmarks", async (req,res) => {
+    try{
+        const bookmark = await Bookmarks.create(req.body)
+        res.json(bookmark)
+    }catch (error){
+        res.status(400).json({error})
+    }
+});
+
+// Show - Get - /bookmarks/:id - get a single bookmark
+app.get("/bookmarks/:id", async (req, res) => {
+    try {
+        // get a bookmark from the database
+        const bookmark = await Bookmarks.findById(req.params.id)
+        // return the bookmark as json
+        res.json(bookmark)
+    } catch (error) {
+        res.status(400).json({error})
+    }
+})
 
 app.get ("/", (req, res) => {
     res.send("hello, world");
