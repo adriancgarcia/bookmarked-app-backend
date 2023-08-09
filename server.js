@@ -57,7 +57,7 @@ app.get("/bookmarks", async(req,res) => {
 //Create//
 app.post("/bookmarks", async (req,res) => {
     try{
-        const bookmark = await bookmark.create(req.body)
+        const bookmark = await Bookmarks.create(req.body)
         res.json(bookmark)
     }catch (error){
         res.status(400).json({error})
