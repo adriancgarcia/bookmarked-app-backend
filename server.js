@@ -50,7 +50,7 @@ app.get("/bookmarks", async(req,res) => {
         const bookmark = await Bookmarks.find({})
         res.json(bookmark)
     }catch (error){
-        res.status
+        res.status(400).json({error})
     }
 });
 
@@ -74,7 +74,7 @@ app.put("/bookmarks/:id", async (req, res) => {
             {
                 new: true
             });
-            res.json (bookmark);
+            res.json(bookmark);
     } catch (error) {
         res.status(400).json({error});
     }
